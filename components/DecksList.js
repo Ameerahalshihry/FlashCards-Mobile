@@ -5,8 +5,8 @@
     class DecksList extends Component {
     
     state = {
-        decks: null
-        // scaleValue: new Animated.Value(0.5)
+        decks: null,
+        scaleValue: new Animated.Value(0.5)
     }
         componentDidMount () {
             getAllDecks().then((response) => {
@@ -16,22 +16,22 @@
 
         handlePress = (deck) => {
         const { navigate } = this.props.navigation
-        const {decks} = this.state
+        const {decks, scaleValue} = this.state
         navigate(('Deck'), {deckId: decks[deck].title, decks:decks})
-            // scaleValue.setValue(0);
-            // Animated.timing(scaleValue, {
-            // toValue: 10,
-            // duration: 300,
-            // easing: Easing.linear
-            // }).start();
+            scaleValue.setValue(0);
+            Animated.timing(scaleValue, {
+            toValue: 10,
+            duration: 300,
+            easing: Easing.linear
+            }).start();
         }
 
         render() {
-        const {decks}= this.state
-        // const cardScale = scaleValue.interpolate({
-        // inputRange: [0, 0.5, 1],
-        // outputRange: [1, 1.1, 1.2]
-        // });
+        const {decks, scaleValue}= this.state
+        const cardScale = scaleValue.interpolate({
+        inputRange: [0, 0.5, 1],
+        outputRange: [1, 1.1, 1.2]
+        });
             return (
             decks !== null ? 
                 (<ScrollView>
@@ -40,7 +40,7 @@
                 return(
                     <Card style={styles.card} key={deck}
                     onPress={() => this.handlePress(deck)}>
-                    <View>
+                    <Animated.View style={cardScale}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#7b68ee', 
                     textAlign: 'center',padding: 15}}> 
                     {decks[deck].title}
@@ -48,7 +48,7 @@
                     <Text style={{textAlign: 'center'}}> 
                     Number of cards : {decks[deck].questions.length}
                     </Text>
-                    </View>
+                    </Animated.View>
                     </Card>
                 )
                 }
