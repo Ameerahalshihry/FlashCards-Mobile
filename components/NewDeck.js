@@ -1,25 +1,19 @@
     import React, { Component } from 'react'
     import { Text, View, StyleSheet, TextInput, Button,TouchableOpacity } from 'react-native'
-    import {addDeck,
-        getAllDecks, 
-        clearLocalNotification,
-        setLocalNotification} from '../utils/api'
-    import DecksList from './DecksList'
+    import { addDeck, getAllDecks } from '../utils/api'
 
     class NewDeck extends Component {
-    state = {
-    title: ''
-    }
-        handleChange = (value) => {
-        this.setState({title: value})
+        state = {
+        title: ''
         }
+        // handleChange = (value) => {
+        // this.setState({title: value})
+        // }
         handleSubmit = () => {
         console.log("submit it")
         console.log(this.state)
         const title = this.state.title
-        
-        addDeck(title)
-
+        addDeck(title).then(() => getAllDecks())
         // this.props.navigation.navigate('Deck', {deckId: title})
         this.props.navigation.navigate('DecksList')
         this.setState({title: ""})
@@ -33,7 +27,7 @@
                         style={styles.input}
                         placeholder = "Enter the title of deck "
                         placeholderTextColor = '#d6d7da'
-                        onChangeText={this.handleChange}
+                        onChangeText={( title ) => this.setState({ title })}
                         value={this.state.title} 
                         />
                 
@@ -55,7 +49,8 @@
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color:"#706fd3",
+        // color:"#706fd3",
+        color: 'black'
     },
     button: {
         alignItems: 'center',
@@ -76,7 +71,7 @@
         borderWidth: 1,
         borderRadius:6
     },
-     btnTitle :{
+    btnTitle :{
         fontSize: 20,
         textAlign: 'center'
         }
@@ -84,7 +79,7 @@
     // <Button style={styles.button} mode="contained" 
     // onPress= {this.handleSubmit} title='Create Deck'>
     // </Button>
-  
+
 
 
     // marginTop: 10,
