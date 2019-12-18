@@ -1,6 +1,6 @@
     import React, { Component } from 'react'
     import { Text, View, TouchableOpacity, StyleSheet, TextInput} from 'react-native'
-    import { addCard } from '../utils/api'
+    import { addCard, getAllDecks } from '../utils/api'
 
     class AddCard extends Component {
     state = {
@@ -16,7 +16,8 @@
         const decks = this.props.navigation.state.params.decks
         const deckId = this.props.navigation.state.params.deckId
         addCard(deckId, obj)
-        this.props.navigation.navigate('Deck')
+        // this.props.navigation.navigate('Deck', {option: "update"}, {length: decks[deckId].questions.length + 1})
+        this.props.navigation.goBack()
         this.setState({question:'',answer: ''})
     }
 

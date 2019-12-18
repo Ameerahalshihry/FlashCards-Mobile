@@ -11,7 +11,7 @@
         console.log(this.state)
         const title = this.state.title
         addDeck(title)
-        this.props.navigation.navigate('DecksList')
+        this.props.navigation.navigate('DecksList', {option: "update"})
         this.setState({title: ""})
     }
         render() {

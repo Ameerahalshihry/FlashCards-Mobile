@@ -5,7 +5,7 @@
     class Deck extends Component {
 
         state = {
-            animateValue: new Animated.Value(0)
+            animateValue: new Animated.Value(0),
         }
         componentDidMount(){
         const {animateValue} = this.state
@@ -14,8 +14,9 @@
             duration: 400,
             }).start();
         }
+    
         render() {
-            const {animateValue} = this.state
+            const {animateValue, length } = this.state
             const decks = this.props.navigation.state.params.decks
             const deckId = this.props.navigation.state.params.deckId
             const { navigate } = this.props.navigation

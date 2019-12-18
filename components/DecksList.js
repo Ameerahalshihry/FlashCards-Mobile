@@ -1,13 +1,13 @@
         import React, { Component } from 'react'
-        import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+        import { Text, View, StyleSheet, ScrollView, TouchableOpacity, RefreshControl} from 'react-native'
         import { getAllDecks } from '../utils/api'
         import { withNavigation } from 'react-navigation'
 
         class DecksList extends Component {
-        
-        state = {
-            decks: null,
-        }
+    
+            state = {
+            decks: null
+            }
             componentDidMount () {
                 this.retrieveDecks()
             }
@@ -20,16 +20,24 @@
                     })
                 console.log(this.state)
             }
-
+            shouldComponentUpdate(nextProps, nextState) {
+                if(nextProps.navigation.state.params)
+                    { 
+                        if(nextProps.navigation.state.params.option === "update")
+                    { 
+                        this.retrieveDecks()
+                            return true
+                    }
+                    } 
+                }
             handlePress = (deck) => {
             const { navigate } = this.props.navigation
             const {decks} = this.state
-            navigate(('Deck'), {deckId: decks[deck].title, decks:decks})
+            navigate(('Deck'), {deckId: decks[deck].title, decks:decks, length: decks[deck].questions.length })
             }
 
             render() {
             const {decks}= this.state
-            
                 return (
                 decks !== null ?
                 ( <ScrollView>
