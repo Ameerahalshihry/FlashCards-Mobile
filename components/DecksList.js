@@ -1,5 +1,5 @@
         import React, { Component } from 'react'
-        import { Text, View, StyleSheet, ScrollView, Animated, Easing, Card, AsyncStorage } from 'react-native'
+        import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
         import { getAllDecks } from '../utils/api'
         import { withNavigation } from 'react-navigation'
 
@@ -7,7 +7,6 @@
         
         state = {
             decks: null,
-            scaleValue: new Animated.Value(0.5)
         }
             componentDidMount () {
                 this.retrieveDecks()
@@ -24,31 +23,21 @@
 
             handlePress = (deck) => {
             const { navigate } = this.props.navigation
-            const {decks, scaleValue} = this.state
+            const {decks} = this.state
             navigate(('Deck'), {deckId: decks[deck].title, decks:decks})
-                scaleValue.setValue(0);
-                Animated.timing(scaleValue, {
-                toValue: 10,
-                duration: 300,
-                easing: Easing.linear
-                }).start();
             }
 
             render() {
-            const {decks, scaleValue}= this.state
-            const cardScale = scaleValue.interpolate({
-            inputRange: [0, 0.5, 1],
-            outputRange: [1, 1.1, 1.2]
-            }) 
+            const {decks}= this.state
+            
                 return (
                 decks !== null ?
                 ( <ScrollView>
                     <View style={styles.container}>
                     {Object.keys(decks).map((deck)=>{
                     return(
-                        <Card style={styles.card}
-                        onPress={() => this.handlePress(deck)}>
-                        <Animated.View style={cardScale}>
+                        <View style={styles.card} key={deck}>
+                        <TouchableOpacity onPress={() => this.handlePress(deck)}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#7b68ee', 
                         textAlign: 'center',padding: 15}}> 
                         {decks[deck].title}
@@ -56,8 +45,8 @@
                         <Text style={{textAlign: 'center'}}> 
                         Number of cards : {decks[deck].questions.length}
                         </Text>
-                        </Animated.View>
-                        </Card>
+                        </TouchableOpacity>
+                        </View>
                     )
                     }
                     )
@@ -91,13 +80,16 @@
             alignItems: 'center',
             height:150,
             borderRadius:8,
-            shadowColor:'rgba(80, 0, 255, .4)',
+            borderColor:'#ccc',
+            borderWidth:0.2,
+            backgroundColor:'#fff',
+            shadowColor:'rgba(80, 0, 255, .8)',
             shadowOffset: {
-                width: 0,
+                width: 3,
                 height: 12,
             },
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
-        elevation: 12,
+        elevation: 16,
             }
         })

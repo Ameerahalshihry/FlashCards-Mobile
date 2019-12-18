@@ -1,5 +1,5 @@
     import React, { Component } from 'react'
-    import { Text, View, TouchableOpacity , StyleSheet, Animated, Button, Card} from 'react-native'
+    import { Text, View, TouchableOpacity , StyleSheet, Animated} from 'react-native'
     import { withNavigation } from 'react-navigation'
     import {clearLocalNotification, setLocalNotification} from '../utils/helper'
 
@@ -17,8 +17,8 @@
     handleAnimation = () => {
     const {opacity, width, height} = this.state
     Animated.timing(opacity, {toValue: 10, duration: 1000}).start()
-    Animated.spring(width, {toValue: 300, speed: 5}).start()
-    Animated.spring(height, {toValue: 300, speed: 5}).start()
+    Animated.spring(width, {toValue: 200, speed: 3}).start()
+    Animated.spring(height, {toValue: 200, speed: 3}).start()
         clearLocalNotification()
             .then(setLocalNotification)
     }
@@ -52,18 +52,18 @@
         {            
             {this.handleAnimation()}
             return (
-                <Card style={styles.card}>
+                <View style={styles.card}>
                 <Animated.View style={[styles.container,{opacity, width, height}]}>
-                <Text style={{justifyContent: 'center', alignItems: 'center', flex: 1, textAlign:'center'}}>
+                <Text style={styles.text}>
                 Your Score : 
                 </Text>
-                <Text style={styles.text}>
+                <Text style={[styles.textFont, styles.text]}>
                 {correctAnswer} out of {length}
                 </Text>
-                <Text  style={{justifyContent: 'center', alignItems: 'center', flex: 1, textAlign:'center'}} >                 
+                <Text style={styles.text} >                 
                 The Correct Answer Percentage :  
                 </Text> 
-                <Text style={styles.text}>
+                <Text style={[styles.textFont, styles.text]}>
                 { (correctAnswer / length ) * 100 } % 
                 </Text>
                 </Animated.View>
@@ -81,11 +81,11 @@
                 onPress={() => {this.props.navigation.goBack()}}>
                     <Text style={styles.btnTitle}> Back To Deck </Text>
                 </TouchableOpacity>
-            </Card>
+            </View>
             )
         }
             return (
-            <Card style={styles.card}>
+            <View style={styles.card}>
             {decks[deckId].questions.length === 0 ?
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text> No cards please add cards to start quiz </Text>
@@ -126,7 +126,7 @@
                     
                 </View>
             }
-            </Card>
+            </View>
             )
         }
     }
@@ -148,33 +148,23 @@
         },
     card:{
         flex: 1,
-        borderWidth:0.5,
         justifyContent: 'center',
         alignItems: 'center',
-        width:350,
-        borderRadius:8,
-        shadowColor:'rgba(80, 0, 255, .4)',
-        shadowOffset: {
-            width: 0,
-            height: 12,
-        },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.00,
-    elevation: 12,
     },
     container:{
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1,
         textAlign:'center',
     },
-    text:{
+    textFont:{
         fontSize: 26,
         fontWeight: 'bold',
         color: '#7b68ee',
+    },
+    text:{
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
         textAlign:'center',
-    },
+    }
     })

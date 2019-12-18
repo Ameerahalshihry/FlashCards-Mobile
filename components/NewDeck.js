@@ -1,23 +1,18 @@
     import React, { Component } from 'react'
-    import { Text, View, StyleSheet, TextInput, Button,TouchableOpacity } from 'react-native'
-    import { addDeck, getAllDecks } from '../utils/api'
+    import { Text, View, StyleSheet, TextInput,TouchableOpacity } from 'react-native'
+    import { addDeck } from '../utils/api'
 
     class NewDeck extends Component {
         state = {
         title: ''
         }
-        // handleChange = (value) => {
-        // this.setState({title: value})
-        // }
         handleSubmit = () => {
         console.log("submit it")
         console.log(this.state)
         const title = this.state.title
-        addDeck(title).then(() => getAllDecks())
-        // this.props.navigation.navigate('Deck', {deckId: title})
+        addDeck(title)
         this.props.navigation.navigate('DecksList')
         this.setState({title: ""})
-    
     }
         render() {
             return (
@@ -49,7 +44,6 @@
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        // color:"#706fd3",
         color: 'black'
     },
     button: {
@@ -66,7 +60,6 @@
     input: {
         margin: 15,
         height: 60,
-        // borderColor: '#7a42f4',
         borderColor:'#7b68ee',
         borderWidth: 1,
         borderRadius:6
@@ -76,14 +69,3 @@
         textAlign: 'center'
         }
     })
-    // <Button style={styles.button} mode="contained" 
-    // onPress= {this.handleSubmit} title='Create Deck'>
-    // </Button>
-
-
-
-    // marginTop: 10,
-    // backgroundColor:'#7b68ee',
-    // height: 50,
-    // borderRadius: 3,
-    // padding:10
