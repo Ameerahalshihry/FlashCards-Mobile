@@ -20,16 +20,17 @@
                     })
                 console.log(this.state)
             }
-            shouldComponentUpdate(nextProps, nextState) {
-                if(nextProps.navigation.state.params)
-                    { 
-                        if(nextProps.navigation.state.params.option === "update")
-                    { 
-                        this.retrieveDecks()
-                            return true
-                    }
-                    } 
-                }
+            //test to update decks
+            // shouldComponentUpdate(nextProps, nextState) {
+            //     if(nextProps.navigation.state.params)
+            //         { 
+            //             if(nextProps.navigation.state.params.option === "update")
+            //         { 
+            //             this.retrieveDecks()
+            //                 return true
+            //         }
+            //         } 
+            //     }
             handlePress = (deck) => {
             const { navigate } = this.props.navigation
             const {decks} = this.state

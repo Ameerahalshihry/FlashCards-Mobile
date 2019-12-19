@@ -5,7 +5,8 @@
     class AddCard extends Component {
     state = {
         question:'',
-        answer: ''
+        answer: '',
+        decks: this.props.navigation.state.params.decks
     }
 
     submit = () => {
@@ -13,9 +14,14 @@
         question:this.state.question,
         answer: this.state.answer
         }
-        const decks = this.props.navigation.state.params.decks
+        // const decks = this.props.navigation.state.params.decks
+        const {decks} = this.state
         const deckId = this.props.navigation.state.params.deckId
         addCard(deckId, obj)
+        .then(()=> getAllDecks()
+            .then((decks) =>{
+                this.setState({decks})
+        }))
         // this.props.navigation.navigate('Deck', {option: "update"}, {length: decks[deckId].questions.length + 1})
         this.props.navigation.goBack()
         this.setState({question:'',answer: ''})
