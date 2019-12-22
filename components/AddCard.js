@@ -1,35 +1,34 @@
     import React, { Component } from 'react'
-    import { Text, View, TouchableOpacity, StyleSheet, TextInput} from 'react-native'
-    import { addCard, getAllDecks } from '../utils/api'
+    import { Text, View, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView} from 'react-native'
+    import { newCard } from '../utils/api'
+    import { connect } from 'react-redux'
+    import { withNavigation } from 'react-navigation'
+    import { addCard } from '../actions/index'
 
     class AddCard extends Component {
     state = {
         question:'',
-        answer: '',
-        decks: this.props.navigation.state.params.decks
+        answer: ''
     }
 
     submit = () => {
-        let obj = {
-        question:this.state.question,
-        answer: this.state.answer
-        }
-        // const decks = this.props.navigation.state.params.decks
-        const {decks} = this.state
         const deckId = this.props.navigation.state.params.deckId
-        addCard(deckId, obj)
-        .then(()=> getAllDecks()
-            .then((decks) =>{
-                this.setState({decks})
-        }))
-        // this.props.navigation.navigate('Deck', {option: "update"}, {length: decks[deckId].questions.length + 1})
-        this.props.navigation.goBack()
+        let card = {
+            question:this.state.question,
+            answer: this.state.answer
+            }
+
+        this.props.dispatch(addCard(deckId, card))
+        newCard(deckId, card)
+        this.props.navigation.navigate('Deck')
+        // this.props.navigation.goBack()
         this.setState({question:'',answer: ''})
     }
 
         render() {
             return (
                 <View style={styles.card}>
+                    <KeyboardAvoidingView>
                     <Text style={styles.paragraph}> Please enter the question </Text>
                         <TextInput 
                         style={styles.input}
@@ -51,11 +50,17 @@
                     onPress={this.submit}>
                     <Text style={styles.btnTitle}> Add Card </Text>
                 </TouchableOpacity>
+                </KeyboardAvoidingView>
                 </View>
             )
         }
     }
-    export default AddCard;
+    function mapStateToProps (decks){
+        return{
+            decks
+        }
+    }
+    export default connect(mapStateToProps)(AddCard)
 
     const styles = StyleSheet.create({
     card:{

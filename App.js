@@ -1,5 +1,5 @@
   import React, { Component } from 'react'
-  import { Text, View, StyleSheet } from 'react-native'
+  import { View, StyleSheet } from 'react-native'
   import DecksList from './components/DecksList'
   import NewDeck from './components/NewDeck'
   import Deck from './components/Deck'
@@ -10,6 +10,10 @@
   import { createStackNavigator } from 'react-navigation-stack'
   import { Ionicons } from '@expo/vector-icons'
   import { setLocalNotification } from './utils/helper'
+  import {Provider} from 'react-redux'
+  import {createStore} from 'redux'
+  import reducer from './reducers'
+  import middleware from './middleware'
 
   export const Tabs = createAppContainer(
     createBottomTabNavigator({
@@ -68,12 +72,16 @@ export const MainNavigator = createAppContainer(
     componentDidMount () {
       setLocalNotification()
     }
+  
     render() {
+      const store = createStore(reducer, middleware)
       return (
+        <Provider store={store}>
         <View style={styles.container}>
           <MainNavigator />
         </View>
-      );
+        </Provider>
+      )
     }
   }
   export default App;

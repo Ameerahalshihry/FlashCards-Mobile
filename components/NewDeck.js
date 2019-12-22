@@ -1,17 +1,21 @@
     import React, { Component } from 'react'
     import { Text, View, StyleSheet, TextInput,TouchableOpacity } from 'react-native'
-    import { addDeck } from '../utils/api'
+    import { newDeck } from '../utils/api'
+    import { connect } from 'react-redux'
+    import { addDeck } from '../actions'
+    import { withNavigation } from 'react-navigation'
 
     class NewDeck extends Component {
+
         state = {
-        title: ''
+            title: ''
         }
+
         handleSubmit = () => {
-        console.log("submit it")
-        console.log(this.state)
-        const title = this.state.title
-        addDeck(title)
-        this.props.navigation.navigate('DecksList', {option: "update"})
+        const {title} = this.state
+        newDeck(title)
+        this.props.dispatch(addDeck(title))
+        this.props.navigation.navigate('Deck',{deckId: title})
         this.setState({title: ""})
     }
         render() {
@@ -34,7 +38,12 @@
             )
         }
     }
-    export default NewDeck;
+    function mapStateToProps (decks){
+        return{
+            decks
+        }
+    }
+    export default withNavigation(connect(mapStateToProps)(NewDeck))
 
     const styles = StyleSheet.create({
     paragraph: {

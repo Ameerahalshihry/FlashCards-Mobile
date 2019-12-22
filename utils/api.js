@@ -13,18 +13,25 @@
         }  
         }
 
-    export async function addDeck(title){
-    return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-        [title]: {
-        title : title,
-        questions: []
+        // export async function getDeck(id) {
+        // return getAllDecks().then((decks)=>{
+        //     decks.filter()
+        // })
+        //     }
+
+    export async function newDeck(title){
+        return getAllDecks().then((decks)=>{
+            AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+            [title]: {
+            title : title,
+            questions: []
         }
     }))
-    }
+    })}
 
-    export async function addCard( title, obj){
+    export async function newCard( title, card){
         return getAllDecks().then((decks)=>{
-            decks[title].questions.push(obj)
+            decks[title].questions.push(card)
             AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(decks));
 
         })

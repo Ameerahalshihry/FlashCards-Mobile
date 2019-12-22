@@ -1,11 +1,12 @@
     import React, { Component } from 'react'
-    import { Text, View, StyleSheet, TouchableOpacity, Button, Card, Animated } from 'react-native'
+    import { Text, View, StyleSheet, TouchableOpacity, Animated } from 'react-native'
     import { withNavigation } from 'react-navigation'
+    import {connect} from 'react-redux'
 
     class Deck extends Component {
 
         state = {
-            animateValue: new Animated.Value(0),
+            animateValue: new Animated.Value(0)
         }
         componentDidMount(){
         const {animateValue} = this.state
@@ -16,8 +17,8 @@
         }
     
         render() {
-            const {animateValue, length } = this.state
-            const decks = this.props.navigation.state.params.decks
+            const {animateValue} = this.state
+            const {decks} = this.props
             const deckId = this.props.navigation.state.params.deckId
             const { navigate } = this.props.navigation
             return (
@@ -44,7 +45,12 @@
             )
         }
     }
-    export default withNavigation(Deck);
+    function mapStateToProps (decks){
+        return{
+            decks
+        }
+    }
+    export default withNavigation(connect(mapStateToProps)(Deck))
 
     const styles = StyleSheet.create({
 
