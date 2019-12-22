@@ -50,18 +50,39 @@ export const MainNavigator = createAppContainer(
         screen: Deck,
         navigationOptions: {
           headerTintColor: '#000',
+          title: 'Deck Details',
+          headerStyle:{
+            backgroundColor: '#7b68ee'
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
         },
       },
       Quiz: {
         screen: Quiz,
         navigationOptions: {
           headerTintColor: '#000',
+          title: 'Quiz',
+          headerStyle:{
+            backgroundColor: '#7b68ee'
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
         },
       },
       AddCard: {
         screen: AddCard,
         navigationOptions: {
           headerTintColor: '#000',
+          title: 'Add Card',
+          headerStyle:{
+            backgroundColor: '#7b68ee'
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
         },
       },
     })
